@@ -1,0 +1,42 @@
+CREATE TABLE users (
+    id INTEGER,
+    username TEXT,
+    email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    registration_date TIMESTAMP DEFAULT (datetime('now', '-5 hours')),
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE themes_users (
+    users_id INTEGER NOT NULL,
+    themes_id INTEGER NOT NULL,
+    PRIMARY KEY (users_id, themes_id),
+    FOREIGN KEY (users_id) REFERENCES users(id),
+    FOREIGN KEY (themes_id) REFERENCES themes(id)
+);
+
+CREATE TABLE themes (
+    id INTEGER PRIMARY KEY,
+    historia TEXT,
+    dibujo TEXT,
+    puntillismo TEXT,
+    tangram TEXT,
+    perspectiva TEXT,
+    anatomia TEXT,
+    creatividad TEXT
+);
+
+CREATE TABLE levels (
+    id INTEGER PRIMARY KEY,
+    themes_id INTEGER NOT NULL,
+    FOREIGN KEY (themes_id) REFERENCES themes(id)
+);
+
+CREATE TABLE user_levels (
+    users_id INTEGER NOT NULL,
+    levels_id INTEGER NOT NULL,
+    PRIMARY KEY (users_id, levels_id),
+    FOREIGN KEY (users_id) REFERENCES users(id),
+    FOREIGN KEY (levels_id) REFERENCES levels(id)
+);
+
